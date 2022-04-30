@@ -32,7 +32,8 @@ def create(ctx):
 @click.pass_context
 def create_labels(ctx):
     """Creates labels"""
-    click.echo("Creating label...")
+    click.echo(f"Creating labels for project {ctx.obj['PROJECT']}...")
+    raise click.ClickException("Not implemented yet!")
 
 #---------------------------------------------------------------------
 # CREATE ISSUES
@@ -41,7 +42,8 @@ def create_labels(ctx):
 @click.pass_context
 def create_labels(ctx):
     """Creates issues"""
-    click.echo("Creating issues...")
+    click.echo(f"Creating issues for project {ctx.obj['PROJECT']}...")
+    raise click.ClickException("Not implemented yet!")
 
 #---------------------------------------------------------------------
 # CREATE LISTS
@@ -50,7 +52,8 @@ def create_labels(ctx):
 @click.pass_context
 def create_labels(ctx):
     """Creates lists"""
-    click.echo("Creating lists...")
+    click.echo(f"Creating kanban board lists for project {ctx.obj['PROJECT']}...")
+    raise click.ClickException("Not implemented yet!")
 
 
 ######################################################################
@@ -69,7 +72,7 @@ def get(ctx):
 @click.pass_context
 def get_labels(ctx):
     """Get the labels for a project"""
-    click.echo("Getting labels...")
+    click.echo(f"Getting labels for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     labels = gitlab.get('labels')
     click.echo(labels)
@@ -81,7 +84,7 @@ def get_labels(ctx):
 @click.pass_context
 def get_issues(ctx):
     """Getting issues"""
-    click.echo("Getting issues...")
+    click.echo(f"Getting issues for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     issues = gitlab.get('issues')
     click.echo(issues)
@@ -93,8 +96,7 @@ def get_issues(ctx):
 @click.pass_context
 def get_lists(ctx):
     """Getting lists"""
-    click.echo("Getting lists...")
+    click.echo(f"Getting kanban board lists for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     lists = gitlab.get('lists')
     click.echo(lists)
-
