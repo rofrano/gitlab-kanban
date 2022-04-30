@@ -23,7 +23,7 @@ def cli(ctx, token, project, gitlab_url):
 @cli.group()
 @click.pass_context
 def create(ctx):
-    """Creates labels, lists, and issues"""
+    """Creates labels, lists, and issues from a CSV file"""
 
 #---------------------------------------------------------------------
 # CREATE LABELS
@@ -31,7 +31,7 @@ def create(ctx):
 @create.command('labels')
 @click.pass_context
 def create_labels(ctx):
-    """Creates labels"""
+    """Creates labels for a project from a CVS file"""
     click.echo(f"Creating labels for project {ctx.obj['PROJECT']}...")
     raise click.ClickException("Not implemented yet!")
 
@@ -41,7 +41,7 @@ def create_labels(ctx):
 @create.command('issues')
 @click.pass_context
 def create_labels(ctx):
-    """Creates issues"""
+    """Creates issues for a project from a CVS file"""
     click.echo(f"Creating issues for project {ctx.obj['PROJECT']}...")
     raise click.ClickException("Not implemented yet!")
 
@@ -51,7 +51,7 @@ def create_labels(ctx):
 @create.command('lists')
 @click.pass_context
 def create_labels(ctx):
-    """Creates lists"""
+    """Creates kanban board lists for a project from a CVS file"""
     click.echo(f"Creating kanban board lists for project {ctx.obj['PROJECT']}...")
     raise click.ClickException("Not implemented yet!")
 
@@ -63,7 +63,7 @@ def create_labels(ctx):
 @cli.group()
 @click.pass_context
 def get(ctx):
-    """Gets labels, lists, and issues"""
+    """Gets labels, lists, and issues for a project"""
 
 #---------------------------------------------------------------------
 # GET LABELS
@@ -71,7 +71,7 @@ def get(ctx):
 @get.command('labels')
 @click.pass_context
 def get_labels(ctx):
-    """Get the labels for a project"""
+    """Returns all of the labels for a project"""
     click.echo(f"Getting labels for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     labels = gitlab.get('labels')
@@ -83,7 +83,7 @@ def get_labels(ctx):
 @get.command('issues')
 @click.pass_context
 def get_issues(ctx):
-    """Getting issues"""
+    """Returns all of the issues for a project"""
     click.echo(f"Getting issues for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     issues = gitlab.get('issues')
@@ -95,7 +95,7 @@ def get_issues(ctx):
 @get.command('lists')
 @click.pass_context
 def get_lists(ctx):
-    """Getting lists"""
+    """Returns all of the kanban board lists for a project"""
     click.echo(f"Getting kanban board lists for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     lists = gitlab.get('lists')
