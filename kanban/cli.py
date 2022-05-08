@@ -7,7 +7,7 @@ from .gitlab import GitLab
 @click.group()
 @click.option("-t", "--token", required=True, envvar="GITLAB_TOKEN", help="GitLab authorization token or set env GITLAB_TOKEN")
 @click.option("-p", "--project", required=True, envvar="GITLAB_PROJECT", help="The GitLab project ID or set env GITLAB_PROJECT")
-@click.option("-u", "--gitlab-url", required=False, envvar="GITLAB_URL", default="https://gitlab.com", help="GitLab URL (defaults to https://gitlab.com)")
+@click.option("-u", "--gitlab-url", required=False, envvar="GITLAB_URL", default="https://gitlab.com", help="GitLab URL [optional] defaults to https://gitlab.com")
 @click.pass_context
 def cli(ctx, token, project, gitlab_url):
     """GitLab Kanban Board Command Line Interface"""
