@@ -1,0 +1,28 @@
+{
+	"name": "Python 3",
+	"dockerFile": "Dockerfile",
+	"context": "..",
+	"remoteUser": "kanban",
+	"workspaceFolder": "/app",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=delegated",
+    "runArgs": ["-h","gitlab"],
+    "remoteEnv": {
+      "GITLAB_URL": "https://gitlab.com"
+    },
+	"extensions": [
+		"VisualStudioExptTeam.vscodeintellicode",
+		"bierner.github-markdown-preview",
+		"DavidAnson.vscode-markdownlint",
+		"donjayamanne.githistory",
+		"GitHub.vscode-pull-request-github",
+		"hbenl.vscode-test-explorer",
+		"yzhang.markdown-all-in-one",
+		"hnw.vscode-auto-open-markdown-preview",
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"njpwerner.autodocstring",
+		"redhat.vscode-yaml",
+		"streetsidesoftware.code-spell-checker"
+	],
+	"postCreateCommand": "sudo pip install -e .[dev]"
+}

@@ -85,7 +85,9 @@ Commands:
 
 ## Development setup
 
-You can create a development environment using a Python virtual environment (`venv`) and `pip` 
+This repository contains the configuration files needed by the [Remote Container](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension of [Visual Studio Code](https://code.visualstudio.com/) that can be used with [Docker Desktop](https://www.docker.com/products/docker-desktop) to bring up a complete development environment simply by starting VSCode and choosing **Restart in Container**.  
+
+You can also create a development environment manually using a Python virtual environment (`venv`) and `pip` 
 
 ```bash
 python3 -m venv .venv
