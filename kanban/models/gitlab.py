@@ -4,7 +4,10 @@ GitLab Module
 This module contains the GitLab class which implements
 the HTTP calls GET, POST, PUT, and DELETE to GitLab
 """
+import logging
 import requests
+
+logger = logging.getLogger()
 
 ######################################################################
 # G I T L A B   W R A P P E R   C L A S S
@@ -18,6 +21,8 @@ class GitLab():
         self.url = url
         self.headers = {'Authorization': f'Bearer {self.token}'}
 
+    def __repr__(self):
+        return '<GitLab %r>' % self.project
 
     def get(self, path: str) -> dict:
         """GET the GitLab URL for the path"""
@@ -28,6 +33,8 @@ class GitLab():
         )
         if result.status_code == 200:
             payload = result.json()
+        else:
+            logger.error(f"GET failed: RC={result.status_code} message={result}")
         return payload
 
 
@@ -42,6 +49,8 @@ class GitLab():
         )
         if result.status_code == 201:
             payload = result.json()
+        else:
+            logger.error(f"POST failed: RC={result.status_code} message={result.text}")
         return payload
 
     def put(self, path: str, data: dict) -> dict:
@@ -55,6 +64,8 @@ class GitLab():
         )
         if result.status_code == 200:
             payload = result.json()
+        else:
+            logger.error(f"PUT failed: RC={result.status_code} message={result}")
         return payload
 
 
@@ -65,4 +76,4 @@ class GitLab():
             headers=self.headers
         )
         if result.status_code != 204:
-            raise Exception("Delete failed")
+            logger.error(f"DELETE failed: RC={result.status_code} message={result}")

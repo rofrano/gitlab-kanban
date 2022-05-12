@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch
 from click.testing import CliRunner
 from kanban.cli import cli
+from kanban.cli import csv_to_dict
 
 class TestKanban(unittest.TestCase):
     """Test Cases kanban command"""
@@ -14,6 +15,13 @@ class TestKanban(unittest.TestCase):
         """It should return help"""
         result = self.runner.invoke(cli, ["--help"])
         self.assertEqual(result.exit_code, 0)
+
+    def test_csv_to_dict(self):
+        """It should convert a CSV file to dictionary format"""
+        results = csv_to_dict("tests/fixtures/labels.csv")
+        self.assertIsNotNone(results)
+        self.assertEqual(len(results), 10)
+        self.assertIsInstance(results[0], dict)
 
     ######################################################################
     # Create test cases
