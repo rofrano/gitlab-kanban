@@ -4,7 +4,7 @@ GitLab Kanban Board Command Line Interface
 import csv
 import click
 from tqdm import tqdm
-from .models import GitLab, Label
+from .models import GitLab, Label, Issue
 
 
 @click.group()
@@ -64,7 +64,7 @@ def list_labels(ctx):
 @labels.command('delete')
 @click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The CSV file with the labels to delete")
 @click.pass_context
-def delete_labels(ctx, input, all):
+def delete_labels(ctx, input):
     """Deletes labels for a project from a CVS file"""
     click.echo(f"Deleting labels for project {ctx.obj['PROJECT']}...")
     click.echo(f"Processing {input}...")
@@ -183,11 +183,10 @@ def create_issues(ctx, input):
     click.echo(f"Processing {input}...")
     issue_data = csv_to_dict(input)
     click.echo(f"Found {len(issue_data)} issues...")
-    # click.echo(issue_data)
     click.echo("Sending to GitLab...")
-    gitlab = ctx.obj['GITLAB']
+    issue = Issue(ctx.obj['GITLAB'])
     for entry in tqdm(issue_data, total=len(issue_data)):
-        results = gitlab.post('issues', entry)
+        results = issue.create(entry)
         # click.echo(results)
     click.echo("Done")
 
@@ -199,9 +198,27 @@ def create_issues(ctx, input):
 def list_issues(ctx):
     """Returns all of the issues for a project"""
     click.echo(f"Getting issues for project {ctx.obj['PROJECT']}...")
-    gitlab = ctx.obj['GITLAB']
-    issues = gitlab.get('issues')
+    issue = Issue(ctx.obj['GITLAB'])
+    issues = issue.all()
     click.echo(issues)
+
+#---------------------------------------------------------------------
+# DELETE ISSUES
+#---------------------------------------------------------------------
+@issues.command('delete')
+@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The CSV file with the issues to delete")
+@click.pass_context
+def delete_issues(ctx, input):
+    """Deletes issues for a project from a CVS file"""
+    click.echo(f"Deleting issues for project {ctx.obj['PROJECT']}...")
+    click.echo(f"Processing {input}...")
+    issue_data = csv_to_dict(input)
+    click.echo(f"Found {len(issue_data)} issues...")
+    click.echo("Sending to GitLab...")
+    issue = Issue(ctx.obj['GITLAB'])
+    for entry in tqdm(issue_data, total=len(issue_data)):
+        issue.delete(entry)
+    click.echo("Done")
 
 
 ######################################################################
