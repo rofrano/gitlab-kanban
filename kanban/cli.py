@@ -3,9 +3,8 @@ GitLab Kanban Board Command Line Interface
 """
 import csv
 import click
-import urllib.parse
 from tqdm import tqdm
-from .models import GitLab
+from .models import GitLab, Label
 
 
 @click.group()
@@ -42,9 +41,9 @@ def create_labels(ctx, input):
     label_data = csv_to_dict(input)
     click.echo(f"Found {len(label_data)} labels...")
     click.echo("Sending to GitLab...")
-    gitlab = ctx.obj['GITLAB']
+    label = Label(ctx.obj['GITLAB'])
     for entry in tqdm(label_data, total=len(label_data)):
-        results = gitlab.post('labels', entry)
+        results = label.create(entry)
     click.echo("Done")
 
 #---------------------------------------------------------------------
@@ -55,8 +54,8 @@ def create_labels(ctx, input):
 def list_labels(ctx):
     """Returns all of the labels for a project"""
     click.echo(f"Getting labels for project {ctx.obj['PROJECT']}...")
-    gitlab = ctx.obj['GITLAB']
-    labels = gitlab.get('labels')
+    label = Label(ctx.obj['GITLAB'])
+    labels = label.all()
     click.echo(labels)
 
 #---------------------------------------------------------------------
@@ -72,12 +71,10 @@ def delete_labels(ctx, input, all):
     label_data = csv_to_dict(input)
     click.echo(f"Found {len(label_data)} labels...")
     click.echo("Sending to GitLab...")
-    gitlab = ctx.obj['GITLAB']
+    label = Label(ctx.obj['GITLAB'])    
     for entry in tqdm(label_data, total=len(label_data)):
-        name = urllib.parse.quote(entry["name"])
-        results = gitlab.delete(f'labels/{name}')
+        label.delete_by_name(entry["name"])
     click.echo("Done")
-
 
 
 
