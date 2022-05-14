@@ -1,0 +1,12 @@
+name,description,text_color,color
+BLOCKED,Issue is blocked,#FFFFFF,#ff0000
+Lab,Lab asset,#FFFFFF,#c39953
+Graded Quiz,Quiz asset,#333333,#eee600
+Practice Quiz,Quiz,#FFFFFF,#00b140
+Reading,Reading asset,#333333,#f7e7ce
+Script,Script asset,#333333,#013220
+Slides,Slide asset,#FFFFFF,#6699cc
+Under Review,Being reviewed,#FFFFFF,#cc338b
+Video,Video asset,#FFFFFF,#0000ff
+Final Project,Project asset,#FFFFFF,#cc338b
+Peer-Review,Needs review by peer,#FFFFFF,#36454f

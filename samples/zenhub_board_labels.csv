@@ -1,0 +1,7 @@
+"name","color","text_color","description"
+"Icebox","#d2d2d2","#333333","Low priotiry Issues that do not need to be addressed in the near future"
+"Product Backlog","#d2d2d2","#333333","Upcoming Issues that have been reviewed, estmated, and ranked top-to-bottom"
+"Sprint Backlog","#d2d2d2","#333333","Issues to worked on in the sprint, ranked top-to-bottom"
+"New Issues","#d2d2d2","#333333","Issues to be reviewed before adding to Product Backlog"
+"In Progress","#d2d2d2","#333333","Issues currently being worked on by the team"
+"Review/QA","#d2d2d2","#333333","Issues with Merge Requests waiting for review"
