@@ -1,59 +1,67 @@
 """
-Kanban Board
+Board Class
+
+This model manipulates a Board in GitLab
 """
+import logging
+import urllib.parse
 from .gitlab import GitLab
 
+logger = logging.getLogger()
+
+
 class Board():
-    """Represents a Kanban Board in GitLab"""
+    """Manipulates a Board in GitLab"""
 
     gitlab: GitLab = None
 
-    def __init__(self, name: str):
+    def __init__(self, gitlab: GitLab):
         """Constructor"""
-        self.name = name
-        self.id = None
-        self.lists = []
-        self.data = {}
+        self.gitlab = gitlab
 
-    def __repr__(self):
-        return '<Board %r>' % self.name
+    def create(self, data: dict) -> dict:
+        """Creates a board in GitLab"""
+        results = self.gitlab.post('boards', data)
+        if not results:
+            logger.error(f"Create board failed!")
+        return results
 
-    def init(self, gitlab: GitLab) -> None:
-        """Sets the GitLab instance"""
-        Board.gitlab = gitlab
+    def create_list(self, board_id: str, data: dict):
+        """Creates a board list in GitLab"""
+        results = self.gitlab.post(f"boards/{board_id}/lists", data)
+        if not results:
+            logger.error(f"Create board list failed!")
+        return results
 
-    def serialize(self) -> dict:
-        """Serializes the class as a dictionary"""
-        return {
-            "id": self.id,
-            "name": self.name,
-            "lists": self.lists
-        }
+    def delete_by_name(self, name: str):
+        """Deletes a board in GitLab by name"""
+        name = urllib.parse.quote(name)
+        self.gitlab.delete(f'boards/{name}')
 
-    def deserialize(self, data: dict) -> None:
-        """Sets attributes from a dictionary"""
-        for key, value in data.items():
-            setattr(self, key, value)
+    def delete_by_id(self, board_id: str):
+        """Deletes a board in GitLab by id"""
+        self.gitlab.delete(f'boards/{board_id}')
 
-    def create(self):
-        """Creates a kanban board in GitLab"""
-        board = self.serialize()
-        # Create the board first
-        results = self.gitlab.post('boards', board)
-        if results:
-            self.id = results["id"]
-            self.data = results
-            # Update the lists
-            if self.lists:
-                path = f"boards/{self.id}"
-                data = self.serialize()
-                data["lists"] = [label["name"] for label in self.lists]
-                results = self.gitlab.put(path, data)
-                print(results)
+    def delete(self, data: dict):
+        """Deletes a board in GitLab"""
+        self.delete_by_name(data["id"])
 
-    @classmethod
-    def find_by_name(cls, name: str) -> list:
+    def delete_all(self):
+        """Deletes all board in the Project"""
+        boards = self.all()
+        for board in boards:
+            self.delete_by_id(board['id'])
+
+    def all(self) -> list:
+        return self.gitlab.get('boards')
+
+    def find(self, board_id: str) -> dict:
+        """Find a board by it's id"""
+        result = self.gitlab.get(f"boards/{board_id}")
+        return result
+
+    def find_by_name(self, name: str) -> list:
         """Find a board by it's name"""
-        boards = Board.gitlab.get('boards')
+        boards = self.all()
         result = [board for board in boards if board["name"] == name]
         return result

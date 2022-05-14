@@ -19,13 +19,14 @@ class Issue():
         """Constructor"""
         self.gitlab = gitlab
 
-    def create(self, data: dict ):
+    def create(self, data: dict) -> dict:
         """Creates a issue in GitLab"""
         results = self.gitlab.post('issues', data)
         if not results:
             logger.error(f"Create Issue failed!")
+        return results
 
-    def delete_by_id(self, issue_id: str ):
+    def delete_by_id(self, issue_id: str):
         """Deletes a issue in GitLab by id"""
         self.gitlab.delete(f'issues/{issue_id}')
 
@@ -43,6 +44,11 @@ class Issue():
 
     def all(self) -> list:
         return self.gitlab.get('issues')
+
+    def find(self, issue_id: str) -> dict:
+        """Find an issue by it's id"""
+        result = self.gitlab.get(f"issues/{issue_id}")
+        return result
 
     def find_by_title(self, title: str) -> list:
         """Find a issue by it's title"""

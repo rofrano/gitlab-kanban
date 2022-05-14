@@ -4,6 +4,8 @@ GitLab Kanban Board Command Line Interface
 import csv
 import click
 from tqdm import tqdm
+
+from kanban.models.board import Board
 from .models import GitLab, Label, Issue
 
 
@@ -95,8 +97,8 @@ def boards(ctx):
 def list_boards(ctx):
     """Returns all of the kanban boards for a project"""
     click.echo(f"Getting kanban boards for project {ctx.obj['PROJECT']}...")
-    gitlab = ctx.obj['GITLAB']
-    board_data = gitlab.get('boards')
+    board = Board(ctx.obj['GITLAB'])
+    board_data = board.all()
     click.echo(board_data)
 
 #---------------------------------------------------------------------
@@ -110,15 +112,15 @@ def create_boards(ctx, input, name):
     """Creates kanban board for a project from a CVS file of labels"""
     click.echo(f"Creating kanban board for project {ctx.obj['PROJECT']}...")
     click.echo(f"Processing {input}...")
-    gitlab = ctx.obj['GITLAB']
+    board = Board(ctx.obj['GITLAB'])
     # generate board
-    board = {
+    board_data = {
         "name": name
     }
     click.echo("Sending to GitLab...")
-    results = gitlab.post('boards', board)
+    results = board.create(board_data)
     board_id = results["id"]
-    board['id'] = board_id
+    board_data['id'] = board_id
     click.echo(f"Board {board_id} created")
     click.echo(board)
 
@@ -126,15 +128,14 @@ def create_boards(ctx, input, name):
     click.echo("Creating labels...")
     label_data = csv_to_dict(input)
     click.echo(f"Found {len(label_data)} labels...")
-    path = f"boards/{board_id}/lists"
+    label = Label(ctx.obj['GITLAB'])
     for entry in tqdm(label_data, total=len(label_data)):
-        label = gitlab.post('labels', entry)
-        data = { "label_id": label["id"]}
-        results = gitlab.post(path, data)
+        results = label.create(entry)
+        data = { "label_id": results["id"]}
+        results = board.create_list(board_id, data)
 
     # Get the new board
-    path = f"boards/{board_id}"
-    results = gitlab.get(path)
+    results = board.find(board_id)
     click.echo(f"New board {name} created")
     click.echo(results)
 
@@ -151,14 +152,8 @@ def delete_boards(ctx, name):
     gitlab = ctx.obj['GITLAB']
     # Find the board
     click.echo(f"Finding board {name}...")
-    board_data = gitlab.get('boards')
-    result = [board for board in board_data if board["name"] == name]
-    click.echo(f"Deleting board {name}...")
-    if result:
-        board = result[0]
-        click.echo(f"Deleting {board['name']} with ID: {board['id']}")
-        results = gitlab.delete(f"boards/{board['id']}")
-        click.echo(results)
+    board = Board(ctx.obj['GITLAB'])
+    board.delete_by_name(name)
     click.echo(f"Board {name} deleted.")
 
 
