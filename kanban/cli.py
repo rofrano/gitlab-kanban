@@ -39,20 +39,20 @@ def create_labels(ctx, input):
     """Creates labels for a project from a CVS file"""
     click.echo(f"Creating labels for project {ctx.obj['PROJECT']}...")
     click.echo(f"Processing {input}...")
-    labels = csv_to_dict(input)
-    click.echo(f"Found {len(labels)} labels...")
+    label_data = csv_to_dict(input)
+    click.echo(f"Found {len(label_data)} labels...")
     click.echo("Sending to GitLab...")
     gitlab = ctx.obj['GITLAB']
-    for entry in tqdm(labels, total=len(labels)):
+    for entry in tqdm(label_data, total=len(label_data)):
         results = gitlab.post('labels', entry)
     click.echo("Done")
 
 #---------------------------------------------------------------------
-# GET LABELS
+# LIST LABELS
 #---------------------------------------------------------------------
-@labels.command('get')
+@labels.command('list')
 @click.pass_context
-def get_labels(ctx):
+def list_labels(ctx):
     """Returns all of the labels for a project"""
     click.echo(f"Getting labels for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
@@ -63,17 +63,17 @@ def get_labels(ctx):
 # DELETE LABELS
 #---------------------------------------------------------------------
 @labels.command('delete')
-@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The CSV file with labels")
+@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The CSV file with the labels to delete")
 @click.pass_context
-def delete_labels(ctx, input):
+def delete_labels(ctx, input, all):
     """Deletes labels for a project from a CVS file"""
     click.echo(f"Deleting labels for project {ctx.obj['PROJECT']}...")
     click.echo(f"Processing {input}...")
-    labels = csv_to_dict(input)
-    click.echo(f"Found {len(labels)} labels...")
+    label_data = csv_to_dict(input)
+    click.echo(f"Found {len(label_data)} labels...")
     click.echo("Sending to GitLab...")
     gitlab = ctx.obj['GITLAB']
-    for entry in tqdm(labels, total=len(labels)):
+    for entry in tqdm(label_data, total=len(label_data)):
         name = urllib.parse.quote(entry["name"])
         results = gitlab.delete(f'labels/{name}')
     click.echo("Done")
@@ -91,16 +91,16 @@ def boards(ctx):
     """Create, Get, Update, Delete Kanban Boards"""
 
 #---------------------------------------------------------------------
-# GET BOARDS
+# LIST BOARDS
 #---------------------------------------------------------------------
-@boards.command('get')
+@boards.command('list')
 @click.pass_context
-def get_boards(ctx):
+def list_boards(ctx):
     """Returns all of the kanban boards for a project"""
     click.echo(f"Getting kanban boards for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
-    boards = gitlab.get('boards')
-    click.echo(boards)
+    board_data = gitlab.get('boards')
+    click.echo(board_data)
 
 #---------------------------------------------------------------------
 # CREATE BOARDS
@@ -127,10 +127,10 @@ def create_boards(ctx, input, name):
 
     # Create the labels
     click.echo("Creating labels...")
-    labels = csv_to_dict(input)
-    click.echo(f"Found {len(labels)} labels...")
+    label_data = csv_to_dict(input)
+    click.echo(f"Found {len(label_data)} labels...")
     path = f"boards/{board_id}/lists"
-    for entry in tqdm(labels, total=len(labels)):
+    for entry in tqdm(label_data, total=len(label_data)):
         label = gitlab.post('labels', entry)
         data = { "label_id": label["id"]}
         results = gitlab.post(path, data)
@@ -154,8 +154,8 @@ def delete_boards(ctx, name):
     gitlab = ctx.obj['GITLAB']
     # Find the board
     click.echo(f"Finding board {name}...")
-    boards = gitlab.get('boards')
-    result = [board for board in boards if board["name"] == name]
+    board_data = gitlab.get('boards')
+    result = [board for board in board_data if board["name"] == name]
     click.echo(f"Deleting board {name}...")
     if result:
         board = result[0]
@@ -175,26 +175,36 @@ def issues(ctx):
     """Create, Get, Update, Delete Issues"""
 
 #---------------------------------------------------------------------
-# GET ISSUES
+# CREATE ISSUES
 #---------------------------------------------------------------------
-@issues.command('get')
+@issues.command('create')
+@click.option("--input", "-i", type=click.Path(exists=True), required=True, help="The CSV file with issues")
 @click.pass_context
-def get_issues(ctx):
+def create_issues(ctx, input):
+    """Creates issues for a project from a CVS file"""
+    click.echo(f"Creating issues for project {ctx.obj['PROJECT']}...")
+    click.echo(f"Processing {input}...")
+    issue_data = csv_to_dict(input)
+    click.echo(f"Found {len(issue_data)} issues...")
+    # click.echo(issue_data)
+    click.echo("Sending to GitLab...")
+    gitlab = ctx.obj['GITLAB']
+    for entry in tqdm(issue_data, total=len(issue_data)):
+        results = gitlab.post('issues', entry)
+        # click.echo(results)
+    click.echo("Done")
+
+#---------------------------------------------------------------------
+# LIST ISSUES
+#---------------------------------------------------------------------
+@issues.command('list')
+@click.pass_context
+def list_issues(ctx):
     """Returns all of the issues for a project"""
     click.echo(f"Getting issues for project {ctx.obj['PROJECT']}...")
     gitlab = ctx.obj['GITLAB']
     issues = gitlab.get('issues')
     click.echo(issues)
-
-#---------------------------------------------------------------------
-# CREATE ISSUES
-#---------------------------------------------------------------------
-@issues.command('create')
-@click.pass_context
-def create_issues(ctx):
-    """Creates issues for a project from a CVS file"""
-    click.echo(f"Creating issues for project {ctx.obj['PROJECT']}...")
-    raise click.ClickException("Not implemented yet!")
 
 
 ######################################################################
