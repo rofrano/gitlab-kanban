@@ -1,0 +1,5 @@
+"name","color","text_color","description"
+"Product Backlog","#F0F0F0","#333333","Upcoming Issues that have been reviewed, estimated, and ranked top-to-bottom"
+"Sprint Backlog","#F0F0F0","#333333","Issues to worked on in the sprint, ranked top-to-bottom"
+"In Progress","#F0F0F0","#333333","Issues currently being worked on by the team"
+"Done","#F0F0F0","#333333","Issues that are completed"
