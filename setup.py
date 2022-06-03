@@ -35,7 +35,6 @@ setup(
             "pinocchio==0.4.3",
             "coverage==6.3.2",
             "pylint==2.13",
-            "tox==3.24.5",
         ],
     },
     entry_points={
