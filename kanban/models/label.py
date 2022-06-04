@@ -26,11 +26,26 @@ from .gitlab import GitLab
 logger = logging.getLogger()
 
 HTML_COLORS = [
-    "black", "silver", "gray", "white", "maroon", "red", "purple", 
-    "fuchsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua"
+    "black",
+    "silver",
+    "gray",
+    "white",
+    "maroon",
+    "red",
+    "purple",
+    "fuchsia",
+    "green",
+    "lime",
+    "olive",
+    "yellow",
+    "navy",
+    "blue",
+    "teal",
+    "aqua",
 ]
 
-class Label():
+
+class Label:
     """Manipulates a Label in GitLab"""
 
     gitlab: GitLab = None
@@ -41,19 +56,19 @@ class Label():
 
     def create(self, data: dict) -> dict:
         """Creates a label in GitLab"""
-        results = self.gitlab.post('labels', data)
+        results = self.gitlab.post("labels", data)
         if not results:
-            logger.error(f"Create Label failed!")
+            logger.error("Create Label failed!")
         return results
 
     def delete_by_name(self, name: str):
         """Deletes a label in GitLab by name"""
         name = urllib.parse.quote(name)
-        self.gitlab.delete(f'labels/{name}')
+        self.gitlab.delete(f"labels/{name}")
 
     def delete_by_id(self, label_id: str):
         """Deletes a label in GitLab by id"""
-        self.gitlab.delete(f'labels/{label_id}')
+        self.gitlab.delete(f"labels/{label_id}")
 
     def delete(self, data: dict):
         """Deletes a label in GitLab"""
@@ -63,10 +78,11 @@ class Label():
         """Deletes all label in the Project"""
         labels = self.all()
         for label in labels:
-            self.delete_by_id(label['id'])
+            self.delete_by_id(label["id"])
 
     def all(self) -> list:
-        return self.gitlab.get('labels')
+        """Returns all of the labels"""
+        return self.gitlab.get("labels")
 
     def find(self, label_id: str) -> dict:
         """Find a label by it's id"""

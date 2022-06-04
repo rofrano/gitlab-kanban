@@ -26,7 +26,7 @@ from .gitlab import GitLab
 logger = logging.getLogger()
 
 
-class Board():
+class Board:
     """Manipulates a Board in GitLab"""
 
     gitlab: GitLab = None
@@ -37,26 +37,26 @@ class Board():
 
     def create(self, data: dict) -> dict:
         """Creates a board in GitLab"""
-        results = self.gitlab.post('boards', data)
+        results = self.gitlab.post("boards", data)
         if not results:
-            logger.error(f"Create board failed!")
+            logger.error("Create board failed!")
         return results
 
     def create_list(self, board_id: str, data: dict):
         """Creates a board list in GitLab"""
         results = self.gitlab.post(f"boards/{board_id}/lists", data)
         if not results:
-            logger.error(f"Create board list failed!")
+            logger.error("Create board list failed!")
         return results
 
     def delete_by_name(self, name: str):
         """Deletes a board in GitLab by name"""
         name = urllib.parse.quote(name)
-        self.gitlab.delete(f'boards/{name}')
+        self.gitlab.delete(f"boards/{name}")
 
     def delete_by_id(self, board_id: str):
         """Deletes a board in GitLab by id"""
-        self.gitlab.delete(f'boards/{board_id}')
+        self.gitlab.delete(f"boards/{board_id}")
 
     def delete(self, data: dict):
         """Deletes a board in GitLab"""
@@ -66,10 +66,11 @@ class Board():
         """Deletes all board in the Project"""
         boards = self.all()
         for board in boards:
-            self.delete_by_id(board['id'])
+            self.delete_by_id(board["id"])
 
     def all(self) -> list:
-        return self.gitlab.get('boards')
+        """Return all boards"""
+        return self.gitlab.get("boards")
 
     def find(self, board_id: str) -> dict:
         """Find a board by it's id"""

@@ -35,6 +35,8 @@ setup(
             "pinocchio==0.4.3",
             "coverage==6.3.2",
             "pylint==2.13",
+            "flake8==4.0.1",
+            "black==22.3.0"
         ],
     },
     entry_points={
