@@ -43,12 +43,22 @@ Options:
   --help                 Show this message and exit.
 
 Commands:
-  boards  Create, Get, Update, Delete Kanban Boards
-  issues  Create, Get, Update, Delete Issues
-  labels  Create, Get, Update, Delete Labels
+  boards  Create, list, update, delete Kanban Boards
+  issues  Create, list, update, delete Issues
+  labels  Create, list, update, delete Labels
 ```
 
 Each command has a series of subcommands to create the various artifacts.
+
+## Examples
+
+Create a kanban board using the `./sample` label file `board_labels.csv`:
+
+```bash
+kanban boards create -n Development -i samples/board_labels.csv
+```
+
+This will create all pf the labels in that file and then create a board and add one list for each label.
 
 ## CSV Formats
 
