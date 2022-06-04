@@ -1,0 +1,64 @@
+{
+    "id": 107417216,
+    "iid": 1,
+    "project_id": 35744063,
+    "title": "Introduction to TDD",
+    "description": "## Objectives\n\nProvide an overview in about 3 slides\n\n## Content\n\nPPT Link:  \nScript Link:  \nVideo Link:",
+    "state": "opened",
+    "created_at": "2022-04-28T18:46:16.581Z",
+    "updated_at": "2022-05-13T10:59:55.253Z",
+    "closed_at": null,
+    "closed_by": null,
+    "labels": [
+        "Video"
+    ],
+    "milestone": null,
+    "assignees": [],
+    "author": {
+        "id": 9348920,
+        "username": "rofrano",
+        "name": "John Rofrano",
+        "state": "active",
+        "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/9348920/avatar.png",
+        "web_url": "https://gitlab.com/rofrano"
+    },
+    "type": "ISSUE",
+    "assignee": null,
+    "user_notes_count": 0,
+    "merge_requests_count": 0,
+    "upvotes": 0,
+    "downvotes": 0,
+    "due_date": null,
+    "confidential": false,
+    "discussion_locked": null,
+    "issue_type": "issue",
+    "web_url": "https://gitlab.com/nyu-devops/kanban-example/-/issues/1",
+    "time_stats": {
+        "time_estimate": 0,
+        "total_time_spent": 0,
+        "human_time_estimate": null,
+        "human_total_time_spent": null
+    },
+    "task_completion_status": {
+        "count": 0,
+        "completed_count": 0
+    },
+    "weight": null,
+    "blocking_issues_count": 0,
+    "has_tasks": false,
+    "_links": {
+        "self": "https://gitlab.com/api/v4/projects/35744063/issues/1",
+        "notes": "https://gitlab.com/api/v4/projects/35744063/issues/1/notes",
+        "award_emoji": "https://gitlab.com/api/v4/projects/35744063/issues/1/award_emoji",
+        "project": "https://gitlab.com/api/v4/projects/35744063"
+    },
+    "references": {
+        "short": "#1",
+        "relative": "#1",
+        "full": "nyu-devops/kanban-example#1"
+    },
+    "severity": "UNKNOWN",
+    "moved_to_id": null,
+    "service_desk_reply_to": null,
+    "health_status": null
+}

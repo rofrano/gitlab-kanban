@@ -1,8 +1,6 @@
 # GitLab Kanban Board Command Line Interface
 
-This project provides and command line interface for generating and manipulating Kanban boards on GitLab.It was built to help teams setting up their initial Kanban board with consistent labels and lists. It also has the ability to create stories that track assets.
-
-It was originally created to help content creators track assets for training videos. Each video required a script, slides, lab, and the video itself. All of these assets were created by different people and it got very tedious creating 4 stories for every video to track the 4 assets. This CLI has the ability to specify the story once, and it will automatically create a card for each assets independently.
+This project provides and command line interface for generating and manipulating Kanban boards on GitLab. It was built to help teams setting up their initial Kanban board with consistent labels and lists. It also has the ability to create stories that track assets.
 
 ## Installation
 
@@ -37,51 +35,59 @@ Options:
                          [required]
   -p, --project TEXT     The GitLab project ID or set env GITLAB_PROJECT
                          [required]
-  -u, --gitlab-url TEXT  GitLab URL (defaults to https://gitlab.com)
+  -u, --gitlab-url TEXT  GitLab URL [optional] defaults to https://gitlab.com
   --help                 Show this message and exit.
 
 Commands:
-  create  Creates labels, lists, and issues from a CSV file
-  get     Gets labels, lists, and issues for a project
+  boards  Create, Get, Update, Delete Kanban Boards
+  issues  Create, Get, Update, Delete Issues
+  labels  Create, Get, Update, Delete Labels
 ```
 
 Each command has a series of subcommands to create the various artifacts.
 
-### Create command help
+## CSV Formats
 
-```text
-$ kanban create --help
+These are the fields that are expected in each of the CSV files:
 
-Usage: kanban create [OPTIONS] COMMAND [ARGS]...
+### Labels
 
-  Creates labels, lists, and issues from a CSV file
+The columns for the labels CSV is as follows:
 
-Options:
-  --help  Show this message and exit.
-
-Commands:
-  issues  Creates issues for a project from a CVS file
-  labels  Creates labels for a project from a CVS file
-  lists   Creates kanban board lists for a project from a CVS file
+```
+"name","description","text_color","color"
 ```
 
-### Get command help
+| Column name | Description |
+|-------------|-------------|
+| name        | The label name |
+| description | A description of the label |
+| text_color  | The text color the label |
+| color       | The background color the label |
 
-```text
-$ kanban get --help
+Refer to `./samples` folder for examples
 
-Usage: kanban get [OPTIONS] COMMAND [ARGS]...
+### Boards
 
-  Gets labels, lists, and issues for a project
+Boards in GitLab are a collection of lists that are associated with labels. The format for a board, therefore, is the same as a label. When creating a board you pss in a name for the board and a label.csv file that has the labels for the bard lists. Once this will be created for each label.
 
-Options:
-  --help  Show this message and exit.
+Refer to `./samples` folder for examples
 
-Commands:
-  issues  Returns all of the issues for a project
-  labels  Returns all of the labels for a project
-  lists   Returns all of the kanban board lists for a project
+### Issues
+
+The columns for the issues CSV is as follows:
+
 ```
+"title","description","labels"
+```
+
+| Column name | Description |
+|-------------|-------------|
+| title       | The title of the issue |
+| description | The body of the issues |
+| labels      | A comma separated list of labels to assign to the issue |
+
+Refer to `./samples` folder for examples
 
 ## Development setup
 

@@ -1,0 +1,9 @@
+name,description,text_color,color
+bug,Defect that needs fixing,#ffffff,#ee0701
+dependencies,Pull requests that update a dependency file,#ffffff,#0366d6
+duplicate,Dupliacte of existing Issue,#000000,#cccccc
+enhancement,Adds value to the product,#000000,#84b6eb
+help wanted,Looking for help on this,#ffffff,#128A0C
+invalid,Not a valid request,#000000,#e6e6e6
+question,There are questions about this,#ffffff,#cc317c
+wontfix,No plans to fix this,#000000,#ffffff

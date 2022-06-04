@@ -1,0 +1,62 @@
+[
+    {
+        "name": "BLOCKED",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#ff0000"
+    },
+    {
+        "name": "Lab",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#c39953"
+    },
+    {
+        "name": "Graded Quiz",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#eee600"
+    },
+    {
+        "name": "Practice Quiz",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#00b140"
+    },
+    {
+        "name": "Reading",
+        "description": "",
+        "text_color": "#333333",
+        "color": "#f7e7ce"
+    },
+    {
+        "name": "Script",
+        "description": "",
+        "text_color": "#333333",
+        "color": "#013220"
+    },
+    {
+        "name": "Slides",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#6699cc"
+    },
+    {
+        "name": "Under Review",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#cc338b"
+    },
+    {
+        "name": "Video",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#0000ff"
+    },
+    {
+        "name": "Final Project",
+        "description": "",
+        "text_color": "#FFFFFF",
+        "color": "#cc338b"
+    }
+]
