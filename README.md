@@ -1,5 +1,9 @@
 # GitLab Kanban Board Command Line Interface
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Language](https://img.shields.io/badge/Language-Python_3.9-blue.svg)](https://python.org/)
+[![PyPI version](https://badge.fury.io/py/gitlab-kanban.svg)](https://badge.fury.io/py/gitlab-kanban)
+
 This project provides and command line interface for generating and manipulating Kanban boards on GitLab. It was built to help teams setting up their initial Kanban board with consistent labels and lists. It also has the ability to create stories that track assets.
 
 ## Installation
